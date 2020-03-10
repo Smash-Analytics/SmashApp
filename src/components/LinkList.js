@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Link from './Link'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import { LINKS_PER_PAGE } from '../constants'
+
 
 export const FEED_QUERY = gql`
 query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
@@ -24,12 +24,12 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
     }
   }
   `
-  
+
   class LinkList extends Component {
     render() {
       const linksToRender = [
       ]
-  
+
       return (
         <Query query={FEED_QUERY}>
           {() => linksToRender.map(link => <Link key={link.id} link={link} />)}
@@ -37,5 +37,5 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
       )
     }
   }
-  
+
   export default LinkList

@@ -18,6 +18,7 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import LinkList from "./LinkList";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Menu from './Menu'
 
@@ -118,7 +119,7 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
-    const [page, setPage] = React.useState(<></>)
+    const [page, setPage] = React.useState(<LinkList/>)
     const handleDrawerOpen = () => {
         setOpen(true);
     };
