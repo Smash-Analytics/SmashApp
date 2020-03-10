@@ -1,5 +1,5 @@
 import React from 'react'
-
+import uuidv4 from 'uuid/v4'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
@@ -27,20 +27,31 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
 export default function Example(props) {
     const { loading, error, data } = useQuery(FEED_QUERY, {
         variables: {
-            eventId: 10480,
+            eventId: 78790,
             page: 1,
             perPage: 20
         }
     })
 
-    if (loading) return 'LOADING!!!!!'
+    const [standings, setStandings] = React.useState([])
 
-    if (error) return 'ERROR!' + error.message
+    React.useEffect(() => {
+        if (data && data.event && data.event.standings.nodes) {
+            setStandings(data.event.standings.nodes)
+            console.log(data.event.standings.nodes)
+        }
+    },[data])
 
-    console.log(data)
+
     return(
         <div>
-            <h1>Tommy is a cute ass mofo</h1>
+            {standings.map(standing => {
+                return (
+                    <div key={uuidv4()}>
+                        {standing.placement} - {standing.entrant.name}<br/>
+                    </div>
+                )
+            })}
         </div>
     )
 }
