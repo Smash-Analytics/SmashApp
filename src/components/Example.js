@@ -25,7 +25,13 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
   `
 
 export default function Example(props) {
-    const { loading, error, data } = useQuery(FEED_QUERY)
+    const { loading, error, data } = useQuery(FEED_QUERY, {
+        variables: {
+            eventId: 10480,
+            page: 1,
+            perPage: 20
+        }
+    })
 
     if (loading) return 'LOADING!!!!!'
 
