@@ -14,6 +14,7 @@ import MyProfile from "./MyProfile";
 import Rankings from "./Rankings";
 import Title from "./Title";
 import Tooltip from "@material-ui/core/Tooltip";
+import uuidv4 from 'uuid/v4'
 const list = [
     {name: 'Home', icon: <HomeIcon/>, component: <Title/>},
     {name: 'Gamers', icon: <SportsEsportsIcon/>, component: <Gamers/>},
@@ -27,7 +28,7 @@ export default function Menu(props) {
             {list.map(item => {
                 return (
                     <>
-                        <MenuItem setPage={props.setPage} component={item.component} icon={item.icon} name={item.name}/>
+                        <MenuItem key={uuidv4()} setPage={props.setPage} component={item.component} icon={item.icon} name={item.name}/>
                     </>
                 )
             })}
