@@ -40,6 +40,7 @@ export default function Example(props) {
     console.log(data)
     return(
         <div>
+            <h1>Tommy is a cute ass mofo</h1>
         </div>
     )
 }
