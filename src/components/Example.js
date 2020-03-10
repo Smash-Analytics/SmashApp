@@ -46,6 +46,7 @@ export default function Example(props) {
     return(
         <div>
             {standings.map(standing => {
+                console.log(standing)
                 return (
                     <div key={uuidv4()}>
                         {standing.placement} - {standing.entrant.name}<br/>
