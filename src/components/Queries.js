@@ -22,8 +22,8 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
   }
   `
 
-  export const TournamentsByVideogame = gql`
-  query TournamentsByVideogame($perPage: Int!, $videogameId: ID!) {
+  export const FutureTournamentsByVideogame = gql`
+  query FutureTournamentsByVideogame($perPage: Int!, $videogameId: ID!) {
     tournaments(query: {
       perPage: $perPage
       page: 1
@@ -50,3 +50,34 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
       }
     }
   }`  
+
+  export const PastTournamentsByVideogame2020 = gql`
+  query PastTournamentsByVideogame2020($perPage: Int!, $videogameId: ID!) {
+    tournaments(query: {
+      perPage: $perPage
+      page: 1
+      sortBy: "startAt asc"
+      filter: {
+        past: true
+        afterDate: 1577836800
+        videogameIds: [
+          $videogameId
+        ]
+      }
+    }) {
+      nodes {
+        id
+        name
+        slug
+        startAt
+        events {
+          name
+          id
+          videogame {
+            id
+          }
+        }
+      }
+    }
+  }
+  `
