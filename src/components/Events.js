@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {TournamentsByVideogame} from "./Queries";
+import {EventStandings} from "./Queries";
 import SearchIcon from '@material-ui/icons/Search'
 import Loader from 'react-loader-spinner'
 const useStyles = makeStyles(theme => ({
@@ -18,16 +18,17 @@ const useStyles = makeStyles(theme => ({
         width: '100%'
     }
 }))
-export function Tournaments(props) {
+export function Events(props) {
     const classes = useStyles()
-    const [tournaments, setTournaments] = React.useState([])
+    const [standings, setStandings] = React.useState([])
     const [filtered, setFiltered] = React.useState([])
     const [search, setSearch] = React.useState('')
 
-    const { loading, error, data } = useQuery(TournamentsByVideogame, {
+    const { loading, error, data } = useQuery(EventStandings, {
         variables: {
-            videogameId: 1,
-            perPage: 20
+            eventId: props.eventId ? props.eventId : 78790,
+            page: 1,
+            perPage: 100
         }
     })
 
@@ -36,24 +37,23 @@ export function Tournaments(props) {
         if (data) {
             console.log(data)
         }
-        if (data && data &&   data.tournaments && data.tournaments.nodes) {
-            setTournaments(data.tournaments.nodes)
-            console.log(data.tournaments.nodes)
-            setTournaments(data.tournaments.nodes)
-            setFiltered(data.tournaments.nodes)
+        if (data && data.event &&   data.event.standings && data.event.standings.nodes) {
+            setStandings(data.event.standings.nodes)
+            console.log(data.event.standings.nodes)
+            setFiltered(data.event.standings.nodes)
         }
     },[data])
 
 
     //
-/*    React.useEffect(() => {
-        let arr = [...tournaments]
+    React.useEffect(() => {
+        let arr = [...standings]
         arr = arr.filter(x => {
             return (x.entrant.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
         })
         setFiltered(arr)
 
-    }, [search])*/
+    }, [search])
 
 
 
@@ -64,14 +64,17 @@ export function Tournaments(props) {
                 {loading && <Loader type={'Circles'} height={100} width={100} color={'black'}/>}
                 {error && <h1>Error! SOMETHING IS WRONG</h1>}
                 <Grid item xs={12}>
-                    <TextField label='Search Tournaments' variant={'outlined'} fullWidth value={search} onChange={(e) => setSearch(e.target.value)}/>
+                    <TextField label='Search Player' variant={'outlined'} fullWidth value={search} onChange={(e) => setSearch(e.target.value)}/>
                 </Grid>
-                {filtered.map(tournament => {
+                {filtered.map(standing => {
                     return (
                         <React.Fragment key={uuidv4()}>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
+                                <Typography align={'center'}>{standing.placement}</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
                                 <Typography align={'left'}>
-                                    {tournament.name}
+                                    {standing.entrant.name}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -92,16 +95,16 @@ export default function TourneyWrapper(props) {
         <Paper className={classes.paper}>
             <Grid container item xs={12} justify={'center'} spacing={2} alignItems={'center'}>
 
-                <Grid item xs={12} md={10}>
+                <Grid item xs={12} md={6}>
                     <TextField fullWidth value={eventId} onChange={(e) => setEventId(e.target.value)} variant={'outlined'} label={'Event ID'}/>
                 </Grid>
-                <Grid item xs={12} md={2}>
+                <Grid item xs={12} md={6}>
                     <Button onClick={() => setSubmit(!submit)} fullWidth size={'large'}><SearchIcon/></Button>
                 </Grid>
                 <Grid item xs={12}>
                     {React.useMemo( () => {
                         return (
-                            <Tournaments/>
+                            <Events eventId={eventId}/>
                         )
                     }, [submit])}
                 </Grid>

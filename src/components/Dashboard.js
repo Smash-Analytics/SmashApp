@@ -21,7 +21,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import LinkList from "./LinkList";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Menu from './Menu'
-import Example from "./Tournaments";
+import Example from "./Events";
 
 function Copyright() {
     return (
