@@ -22,8 +22,8 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
   }
   `
 
-  export const FutureTournamentsByVideogame = gql`
-  query FutureTournamentsByVideogame($perPage: Int!, $videogameId: ID!) {
+  export const TournamentsByVideogame = gql`
+  query TournamentsByVideogame($perPage: Int!, $videogameId: ID!) {
     tournaments(query: {
       perPage: $perPage
       page: 1
