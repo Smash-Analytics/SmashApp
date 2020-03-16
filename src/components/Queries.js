@@ -52,14 +52,14 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
   }`  
 
   export const PastTournamentsByVideogame2020 = gql`
-  query PastTournamentsByVideogame2020($perPage: Int!, $videogameId: ID!) {
+  query PastTournamentsByVideogame2020($perPage: Int!, $videogameId: ID!, $date: Timestamp) {
     tournaments(query: {
       perPage: $perPage
       page: 1
       sortBy: "startAt asc"
       filter: {
         past: true
-        afterDate: 1577836800
+        afterDate: $date
         videogameIds: [
           $videogameId
         ]
@@ -70,9 +70,12 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
         name
         slug
         startAt
+        city
+        addrState
         events {
-          name
           id
+          name
+          numEntrants
           videogame {
             id
           }
@@ -81,3 +84,5 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
     }
   }
   `
+
+  export const 
