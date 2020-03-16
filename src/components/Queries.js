@@ -49,7 +49,7 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
         }
       }
     }
-  }`  
+  }`
 
   export const PastTournamentsByVideogame2020 = gql`
   query PastTournamentsByVideogame2020($perPage: Int!, $videogameId: ID!, $date: Timestamp) {
@@ -84,5 +84,3 @@ query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {
     }
   }
   `
-
-  export const 

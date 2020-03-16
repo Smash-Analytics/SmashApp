@@ -12,6 +12,8 @@
     "apollo-boost": "^0.4.7",
     "apollo-link-context": "^1.0.19",
     "clsx": "^1.1.0",
+    "firebase": "^7.11.0",
+    "firebase-admin": "^8.10.0",
     "graphql": "^14.6.0",
     "lodash": "^4.17.15",
     "react": "^16.13.0",

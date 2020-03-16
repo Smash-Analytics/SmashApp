@@ -8,9 +8,11 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {TournamentsByVideogame} from "./Queries";
+import {PastTournamentsByVideogame2020} from "./Queries";
 import SearchIcon from '@material-ui/icons/Search'
 import Loader from 'react-loader-spinner'
+import {FirebaseDB} from "../firebase/firebase";
+
 const useStyles = makeStyles(theme => ({
     paper: {
         padding: theme.spacing(2),
@@ -24,10 +26,11 @@ export function Tournaments(props) {
     const [filtered, setFiltered] = React.useState([])
     const [search, setSearch] = React.useState('')
 
-    const { loading, error, data } = useQuery(TournamentsByVideogame, {
+    const { loading, error, data } = useQuery(PastTournamentsByVideogame2020, {
         variables: {
             videogameId: 1,
-            perPage: 20
+            perPage: 100,
+            date: 1577836800
         }
     })
 
@@ -36,13 +39,25 @@ export function Tournaments(props) {
         if (data) {
             console.log(data)
         }
-        if (data && data &&   data.tournaments && data.tournaments.nodes) {
+        if (data && data && data.tournaments && data.tournaments.nodes) {
             setTournaments(data.tournaments.nodes)
             console.log(data.tournaments.nodes)
             setTournaments(data.tournaments.nodes)
             setFiltered(data.tournaments.nodes)
         }
     },[data])
+
+    React.useEffect(() => {
+        tournaments.forEach(tournament => {
+            FirebaseDB.collection('tournaments').add(tournament)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+    }, [tournaments])
 
 
     //
