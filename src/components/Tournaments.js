@@ -39,9 +39,7 @@ export function Tournaments(props) {
         if (data) {
             console.log(data)
         }
-        if (data && data && data.tournaments && data.tournaments.nodes) {
-            setTournaments(data.tournaments.nodes)
-            console.log(data.tournaments.nodes)
+        if (data  && data.tournaments && data.tournaments.nodes) {
             setTournaments(data.tournaments.nodes)
             setFiltered(data.tournaments.nodes)
         }
